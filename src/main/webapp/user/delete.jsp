@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: user
   Date: 29/03/2022
-  Time: 5:14 CH
+  Time: 4:19 CH
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -16,32 +16,51 @@
 <center>
     <h1>User Management</h1>
     <h2>
-        <a href="/UserServlet?action=users">List All Users</a>
+        <a href="/UserServlet?action=delete=users">List All Users</a>
     </h2>
 </center>
-<form method="post">
-    <h3>Are you sure?</h3>
-    <fieldset>
-        <legend>User information</legend>
-        <table>
+<div align="center">
+    <form method="post">
+        <table border="1" cellpadding="5">
+            <caption>
+                <h2>
+                    Are you sure?
+                </h2>
+            </caption>
+            <c:if test="${user != null}">
+                <input type="hidden" name="id" value="<c:out value='${user.id}' />"/>
+            </c:if>
             <tr>
-                <td>Name: </td>
-                <td>${requestScope["user"].getName()}</td>
+                <th>User Name:</th>
+                <td>
+                    <input type="text" name="name" size="45"
+                           value="<c:out value='${user.name}' />"
+                    />
+                </td>
             </tr>
             <tr>
-                <td>Email: </td>
-                <td>${requestScope["user"].getEmail()}</td>
+                <th>User Email:</th>
+                <td>
+                    <input type="text" name="email" size="45"
+                           value="<c:out value='${user.email}' />"
+                    />
+                </td>
             </tr>
             <tr>
-                <td>Country: </td>
-                <td>${requestScope["customer"].getCountry()}</td>
+                <th>Country:</th>
+                <td>
+                    <input type="text" name="country" size="15"
+                           value="<c:out value='${user.country}' />"
+                    />
+                </td>
             </tr>
             <tr>
-                <td><input type="submit" value="Delete customer"></td>
-                <td><a href="/UserServlet">Back to user list</a></td>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Delete"/>
+                </td>
             </tr>
         </table>
-    </fieldset>
     </form>
+</div>
 </body>
 </html>

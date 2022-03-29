@@ -1,6 +1,5 @@
 package com.Bai11thuchanh.controller;
 
-import com.Bai11thuchanh.dao.IUserDAO;
 import com.Bai11thuchanh.dao.UserDAO;
 import com.Bai11thuchanh.model.User;
 
@@ -34,7 +33,7 @@ public class UserServlet extends HttpServlet {
                     showEditForm(request, response);
                     break;
                 case "delete":
-                    deleteUser(request, response);
+                   ShowDeleteForm(request,response);
                     break;
                 default:
                     listUser(request, response);
@@ -43,6 +42,14 @@ public class UserServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void ShowDeleteForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        User existingUser = userDAO.selectUser(id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/delete.jsp");
+        request.setAttribute("user", existingUser);
+        dispatcher.forward(request, response);
     }
 
     @Override
@@ -58,6 +65,9 @@ public class UserServlet extends HttpServlet {
                     break;
                 case "edit":
                     updateUser(request,response);;
+                    break;
+                case "delete":
+                    deleteUser(request, response);
                     break;
             }
         } catch (SQLException ex) {

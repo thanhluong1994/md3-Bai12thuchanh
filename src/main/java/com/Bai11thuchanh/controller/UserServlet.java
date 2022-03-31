@@ -35,6 +35,11 @@ public class UserServlet extends HttpServlet {
                 case "delete":
                    ShowDeleteForm(request,response);
                     break;
+                case "search":
+                    ShowSearchForm(request,response);
+                    break;
+                case "sort":
+                    showSortForm(request,response);
                 default:
                     listUser(request, response);
                     break;
@@ -42,6 +47,16 @@ public class UserServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void showSortForm(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/sort.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void ShowSearchForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/search.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void ShowDeleteForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,12 +83,34 @@ public class UserServlet extends HttpServlet {
                     break;
                 case "delete":
                     deleteUser(request, response);
+                case "search":
+                    searchUser(request, response);
+                    break;
+                case "sort":
+                    sortUser(request,response);
                     break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
     }
+
+    private void sortUser(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+        String name = request.getParameter("name");
+        List<User> sortUserList=userDAO.sortUser();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/sortDisplay.jsp");
+        request.setAttribute("user", sortUserList);
+        dispatcher.forward(request, response);
+    }
+
+    private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String country = request.getParameter("country");
+        List<User> userList=userDAO.searchUser(country);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/display.jsp");
+        request.setAttribute("user", userList);
+        dispatcher.forward(request, response);
+    }
+
     private void listUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         List<User> listUser = userDAO.selectAllUsers();

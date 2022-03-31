@@ -16,7 +16,8 @@
 <center>
   <h1>User Management</h1>
   <h2>
-    <a href="/UserServlet?action=create">Add New User</a>
+    <a href="/UserServlet?action=create">Add New User</a> <br> <br>
+    <a href="/UserServlet?action=sort">Sort User</a>
   </h2>
 </center>
 <div align="center">
@@ -43,5 +44,21 @@
     </c:forEach>
   </table>
 </div>
+<center>
+  <h2>Search User</h2>
+  <form method="post">
+  </caption>
+  <tr>
+    <th>Country:</th>
+    <td>
+      <input type="text" name="country" id="country" size="15"/>
+      <input type="text" name="action" value="search" hidden size="15"/>
+    </td>
+    <td colspan="2" align="center">
+      <input type="submit" value="search"/>
+    </td>
+  </tr>
+    </form>
+</center>
 </body>
 </html>
